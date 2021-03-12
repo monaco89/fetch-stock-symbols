@@ -1,0 +1,16 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - yarn global add serverless
+  build:
+    commands:
+      - make
+      - SLS_DEBUG=1 sls deploy --verbose
+
+# artifacts:
+#   files:
+#   - target/**/*
+#   - serverless.yml
+

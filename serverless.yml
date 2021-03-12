@@ -1,0 +1,22 @@
+service: fetch-stock-symbols
+
+provider:
+  region: "us-east-1"
+  name: aws
+  runtime: go1.x
+  timeout: 300
+
+package:
+ exclude:
+   - ./**
+ include:
+   - ./bin/**
+
+functions:
+  main:
+    handler: bin/main
+    events:
+      # 9:00 AM on the first Monday of each month
+      - schedule: cron(0 9 ? * 2#1 *)
+    environment:
+      S3_FILES_BUCKET: ${env:S3_FILES_BUCKET, self:provider.S3_FILES_BUCKET}
