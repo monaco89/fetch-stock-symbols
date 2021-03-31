@@ -3,7 +3,6 @@ package main
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -48,7 +47,6 @@ func fetchStocks() map[string]StockData {
 
 func writeJsonfile(stocks map[string]StockData) {
 	b, _ := json.MarshalIndent(stocks, "", " ")
-	fmt.Println(string(b))
 
 	_ = ioutil.WriteFile("/tmp/tickers.json", b, 0644)
 }
@@ -131,6 +129,7 @@ func runLambda() {
 	writeJsonfile(stocks)
 	log.Println("Uploading to S3...")
 	uploadToS3()
+	log.Println("Write to DB...")
 	writeToDB(stocks)
 }
 
